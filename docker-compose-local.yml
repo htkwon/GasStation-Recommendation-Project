@@ -1,0 +1,24 @@
+version : "3.8"
+services:
+  gasStation-project-redis:
+    container_name: gasstation-project-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: htkwon/gasstation-project-redis
+    ports:
+      - "6379:6379"
+
+  gasStation-project-database:
+    container_name: gasstation-project-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: htkwon/gasstation-project-database
+    environment:
+      - MARIADB_DATABASE=gasStation-project
+      - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
