@@ -14,6 +14,14 @@ spring :
     activate:
       on-profile: common
 
+#보통은 외부 api의 호출 횟수 제한이 있지만 현 프로젝트에서는 큰 고려사항이 아니기에 common에 설정.
+kakao:
+  rest:
+    api:
+      key: ${KAKAO_REST_API_KEY}
+
+
+
 
 
 ---
