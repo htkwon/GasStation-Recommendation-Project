@@ -2,8 +2,8 @@ package com.example.gasstationproject.api.service;
 
 import com.example.gasstationproject.api.dto.KakaoApiResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
