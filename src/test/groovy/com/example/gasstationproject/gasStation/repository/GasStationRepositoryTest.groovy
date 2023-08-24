@@ -4,7 +4,10 @@ import com.example.gasstationproject.AbstractIntegrationContainerBaseTest
 import com.example.gasstationproject.gasStation.entity.GasStation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.cglib.core.Local
 import spock.lang.Specification
+
+import java.time.LocalDateTime
 
 @SpringBootTest
 class GasStationRepositoryTest extends AbstractIntegrationContainerBaseTest {
@@ -65,5 +68,27 @@ class GasStationRepositoryTest extends AbstractIntegrationContainerBaseTest {
         res.size()
 
     }
+
+    def "BaseTimeEntity 등록"() {
+        given:
+        LocalDateTime now = LocalDateTime.now()
+        String address = "서울 특별시 성북구 종암동"
+        String name = "sk 주유소"
+
+        def entity = GasStation.builder()
+            .gasStationAddress(address)
+            .gasStationName(name)
+            .build()
+        when:
+        gasStationRepository.save(entity)
+        def res = gasStationRepository.findAll()
+
+        then:
+        res.get(0).getCreatedDate().isAfter(now)
+        res.get(0).getModifiedDate().isAfter(now)
+
+    }
+
+
 
 }
