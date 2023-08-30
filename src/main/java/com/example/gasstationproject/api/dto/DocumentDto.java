@@ -1,9 +1,11 @@
 package com.example.gasstationproject.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class DocumentDto {
 
     @JsonProperty("address_name")
