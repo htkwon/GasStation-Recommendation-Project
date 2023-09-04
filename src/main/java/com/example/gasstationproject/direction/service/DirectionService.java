@@ -80,6 +80,7 @@ public class DirectionService {
                                 .inputLongitude(inputDocumentDto.getLongitude())
                                 .inputLatitude(inputDocumentDto.getLatitude())
                                 .targetGasStationName(resultDocumentDto.getPlaceName())
+                                .targetAddress(resultDocumentDto.getAddressName())
                                 .targetLongitude(resultDocumentDto.getLongitude())
                                 .targetLatitude(resultDocumentDto.getLatitude())
                                 .distance(resultDocumentDto.getDistance() * 0.001)
