@@ -17,7 +17,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class KakaoCategorySearchService {
 
-    private KakaoUriBuilderService kakaoUriBuilderService;
+    private final KakaoUriBuilderService kakaoUriBuilderService;
 
     private final RestTemplate restTemplate;
 
