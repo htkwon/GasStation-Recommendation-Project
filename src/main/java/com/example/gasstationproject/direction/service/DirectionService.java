@@ -1,12 +1,16 @@
 package com.example.gasstationproject.direction.service;
 
 import com.example.gasstationproject.api.dto.DocumentDto;
+import com.example.gasstationproject.api.service.KakaoCategorySearchService;
 import com.example.gasstationproject.direction.entity.Direction;
+import com.example.gasstationproject.direction.repository.DirectionRepository;
 import com.example.gasstationproject.gasStation.dto.GasStationDto;
 import com.example.gasstationproject.gasStation.service.GasStationSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +27,21 @@ public class DirectionService {
     private static final double RADIUS_KM = 10.0;
 
     private final GasStationSearchService gasStationSearchService;
+    private final DirectionRepository directionRepository;
+
+    private final KakaoCategorySearchService kakaoCategorySearchService;
+
+
+    @Transactional
+    public List<Direction> saveAll(List<Direction> directionList){
+        if(CollectionUtils.isEmpty(directionList)){
+            return Collections.emptyList();
+        }
+
+        return directionRepository.saveAll(directionList);
+
+    }
+
 
     public List<Direction> buildDirectionList(DocumentDto documentDto){
 
@@ -47,6 +66,28 @@ public class DirectionService {
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
+
+
+    public List<Direction> buildDirectionListByCategoryApi(DocumentDto inputDocumentDto){
+        if(Objects.isNull(inputDocumentDto)) return Collections.emptyList();
+
+        return kakaoCategorySearchService
+                .requestGasStationCategorySearch(inputDocumentDto.getLatitude(),inputDocumentDto.getLongitude(),RADIUS_KM)
+                .getDocumentDtoList()
+                .stream().map(resultDocumentDto ->
+                        Direction.builder()
+                                .inputAddress(inputDocumentDto.getAddressName())
+                                .inputLongitude(inputDocumentDto.getLongitude())
+                                .inputLatitude(inputDocumentDto.getLatitude())
+                                .targetGasStationName(resultDocumentDto.getPlaceName())
+                                .targetLongitude(resultDocumentDto.getLongitude())
+                                .targetLatitude(resultDocumentDto.getLatitude())
+                                .distance(resultDocumentDto.getDistance() * 0.001)
+                                .build())
+                .limit(MAX_SEARCH_COUNT)
+                .collect(Collectors.toList());
+    }
+
 
 
 
