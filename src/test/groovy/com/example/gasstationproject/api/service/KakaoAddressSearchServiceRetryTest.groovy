@@ -30,8 +30,7 @@ class KakaoAddressSearchServiceRetryTest extends AbstractIntegrationContainerBas
     def setup(){
         mockWebServer = new MockWebServer()
         mockWebServer.start()
-//        println mockWebServer.port
-//        println mockWebServer.url("/")
+
     }
 
     def cleanup(){

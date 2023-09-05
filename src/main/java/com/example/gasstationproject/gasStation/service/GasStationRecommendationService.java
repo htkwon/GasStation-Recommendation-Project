@@ -31,6 +31,7 @@ public class GasStationRecommendationService {
 
     private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
 
+
     @Value("${gasStation.recommendation.base.url}")
     private String baseUrl;
 

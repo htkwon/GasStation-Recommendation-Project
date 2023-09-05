@@ -23,7 +23,7 @@ public class KakaoCategorySearchService {
 
     private static final String GAS_CATEGORY = "OL7";
 
-    @Value("${KAKAO_REST_API_KEY}")
+    @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
 
     public KakaoApiResponseDto requestGasStationCategorySearch(double latitude, double longitude, double radius){

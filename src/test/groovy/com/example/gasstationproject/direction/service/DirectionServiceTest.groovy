@@ -1,6 +1,8 @@
 package com.example.gasstationproject.direction.service
 
 import com.example.gasstationproject.api.dto.DocumentDto
+import com.example.gasstationproject.api.service.KakaoCategorySearchService
+import com.example.gasstationproject.direction.repository.DirectionRepository
 import com.example.gasstationproject.gasStation.dto.GasStationDto
 import com.example.gasstationproject.gasStation.service.GasStationSearchService
 import spock.lang.Specification
@@ -8,8 +10,13 @@ import spock.lang.Specification
 class DirectionServiceTest extends Specification {
 
     private GasStationSearchService gasStationSearchService = Mock()
+    private final DirectionRepository directionRepository = Mock()
+    private final KakaoCategorySearchService kakaoCategorySearchService = Mock()
+    private final Base62Service base62Service = Mock()
 
-    private DirectionService directionService = new DirectionService(gasStationSearchService)
+
+    private DirectionService directionService = new DirectionService(gasStationSearchService,directionRepository,
+            kakaoCategorySearchService,base62Service)
 
     private List<GasStationDto> gasStationDtoList
 

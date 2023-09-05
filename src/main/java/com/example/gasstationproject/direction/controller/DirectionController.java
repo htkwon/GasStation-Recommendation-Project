@@ -1,19 +1,16 @@
 package com.example.gasstationproject.direction.controller;
 
-import com.example.gasstationproject.direction.dto.OutputDto;
-import com.example.gasstationproject.direction.entity.Direction;
 import com.example.gasstationproject.direction.service.DirectionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class DirectionContoller {
+public class DirectionController {
 
     public final DirectionService directionService;
 
