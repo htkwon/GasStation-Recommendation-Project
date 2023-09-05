@@ -20,16 +20,9 @@ public class DirectionContoller {
 
     @GetMapping("/dir/{encodedId}")
     public String searchDirection(@PathVariable("encodedId") String encodedId){
-        Direction resultDirection = directionService.findById(encodedId);
+        String resultDirectionUri = directionService.findDirectionUrlById(encodedId);
 
-
-        String params = String.join(",",resultDirection.getTargetGasStationName(),
-                String.valueOf(resultDirection.getTargetLatitude()),String.valueOf(resultDirection.getTargetLongitude()));
-        String resultUri = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL+params).toUriString();
-
-        log.info("direction params : {}, url : {} ", params,resultUri);
-
-        return "redirect:"+resultUri;
+        return "redirect:"+resultDirectionUri;
     }
 
 
