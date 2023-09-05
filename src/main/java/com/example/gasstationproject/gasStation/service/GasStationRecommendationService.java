@@ -5,10 +5,12 @@ import com.example.gasstationproject.api.dto.KakaoApiResponseDto;
 import com.example.gasstationproject.api.service.KakaoAddressSearchService;
 import com.example.gasstationproject.direction.dto.OutputDto;
 import com.example.gasstationproject.direction.entity.Direction;
+import com.example.gasstationproject.direction.service.Base62Service;
 import com.example.gasstationproject.direction.service.DirectionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.result.Output;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -25,10 +27,12 @@ public class GasStationRecommendationService {
 
     private final KakaoAddressSearchService kakaoAddressSearchService;
     private final DirectionService directionService;
+    private final Base62Service base62Service;
 
     private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
-    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
+    @Value("${gasStation.recommendation.base.url}")
+    private String baseUrl;
 
     public List<OutputDto> recommendGasStationList(String address){
         KakaoApiResponseDto kakaoApiResponseDto = kakaoAddressSearchService.requestAddressSearch(address);
@@ -50,17 +54,10 @@ public class GasStationRecommendationService {
     }
 
     private OutputDto convertToOutputDto(Direction direction){
-
-        String params = String.join(",",direction.getTargetGasStationName(),
-                String.valueOf(direction.getTargetLatitude()),String.valueOf(direction.getTargetLongitude()));
-        String resultUri = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL+params).toUriString();
-
-        log.info("direction params : {}, url : {} ", params,resultUri);
-
         return OutputDto.builder()
                 .gasStationAddress(direction.getTargetAddress())
                 .gasStationName(direction.getTargetGasStationName())
-                .directionUrl(resultUri)
+                .directionUrl(baseUrl + base62Service.encodeDirectionId(direction.getId()))
                 .roadViewUrl(ROAD_VIEW_BASE_URL+direction.getTargetLatitude()+","+direction.getTargetLongitude())
                 .distance(String.format("%.2f km",direction.getDistance()))
                 .build();
