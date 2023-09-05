@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class DirectionContoller {
 
     public final DirectionService directionService;
-    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     @GetMapping("/dir/{encodedId}")
     public String searchDirection(@PathVariable("encodedId") String encodedId){
