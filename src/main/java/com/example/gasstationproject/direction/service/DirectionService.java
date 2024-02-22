@@ -4,7 +4,6 @@ import com.example.gasstationproject.api.dto.DocumentDto;
 import com.example.gasstationproject.api.service.KakaoCategorySearchService;
 import com.example.gasstationproject.direction.entity.Direction;
 import com.example.gasstationproject.direction.repository.DirectionRepository;
-import com.example.gasstationproject.gasStation.dto.GasStationDto;
 import com.example.gasstationproject.gasStation.service.GasStationSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

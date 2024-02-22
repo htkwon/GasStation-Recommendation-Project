@@ -45,6 +45,11 @@ public class GasStationService {
 
     }
 
+    @Transactional
+    public void saveAll(List<GasStation> gasStations){
+        gasStationRepository.saveAll(gasStations);
+    }
+
     @Transactional(readOnly = true)
     public List<GasStation> findAll(){
         return gasStationRepository.findAll();
